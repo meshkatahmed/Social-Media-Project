@@ -34,7 +34,7 @@ def log_in(request):
 
             if user is not None:
                 login(request,user)
-                pass
+                return HttpResponseRedirect(reverse('post_app:home'))
     diction = {'title':'Log In','form':form}
     return render(request,'login_app/login.html',context=diction)
 
@@ -49,3 +49,8 @@ def edit_profile(request):
             form = EditProfile(instance=current_user)
     diction = {'form':form,'title':'Edit Profile'}
     return render(request,'login_app/profile.html',context=diction)
+
+@login_required
+def log_out(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('login_app:login'))
