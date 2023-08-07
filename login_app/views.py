@@ -47,6 +47,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save(commit=True)
             form = EditProfile(instance=current_user)
+            return HttpResponseRedirect(reverse('login_app:profile'))
     diction = {'form':form,'title':'Edit Profile'}
     return render(request,'login_app/profile.html',context=diction)
 
@@ -54,3 +55,8 @@ def edit_profile(request):
 def log_out(request):
     logout(request)
     return HttpResponseRedirect(reverse('login_app:login'))
+
+@login_required
+def profile(request):
+    diction = {'title':'User profile'}
+    return render(request,'login_app/user.html',context=diction)
