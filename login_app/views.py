@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse,reverse_lazy
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
+from post_app.forms import PostForm
 
 # Create your views here.
 def sign_up(request):
@@ -58,5 +59,13 @@ def log_out(request):
 
 @login_required
 def profile(request):
-    diction = {'title':'User profile'}
+    form = PostForm()
+    if request.method=='POST':
+        form = PostForm(request.POST,request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return HttpResponseRedirect(reverse('home'))
+    diction = {'title':'User profile','form':'form'}
     return render(request,'login_app/user.html',context=diction)
