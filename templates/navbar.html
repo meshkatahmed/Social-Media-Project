@@ -12,6 +12,11 @@
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'post_app:home' %}">Home</a>
         </li>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <form class="form-inline" method='GET'>
+          <input class="form-control mr-sm-2" type="text" name="search"placeholder="Search"/>
+          <button class="btn btn-success" type="submit">Search</button>
+        </form>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'login_app:logout' %}">Logout</a>
         </li>

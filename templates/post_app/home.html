@@ -1,3 +1,25 @@
 {% extends 'navbar.html' %}
-{% block title_block %}{% endblock %}
-{% block body_block %}Homepage{% endblock %}
+{% block title_block %}{{title}}{% endblock %}
+{% block body_block %}
+  {% if search %}
+    {% for user in result %}
+      <div class="row">
+        <div class="col-sm-2">
+          {% if user.profile.profile_pic %}
+            <img src='/media/{{user.profile.profile_pic}}' width='75px' height='75px' class="rounded-circle"></a>
+          {% else %}
+            <img src='/media/default.png' width='75px' height='75px' class="rounded-circle"></a>
+          {% endif %}
+        </div>
+        <div class="col-sm-10">
+          <a href="{% url 'login_app:user' username=user.username %}">{{user.username}}</a>
+          <br>
+          {{user.profile.full_name}}
+        </div>
+      </div>
+      <br>
+    {% endfor %}
+  {% else %}
+    <p>Homepage</p>
+  {% endif %}
+{% endblock %}

@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse,reverse_lazy
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from post_app.forms import PostForm
 
 # Create your views here.
@@ -69,3 +70,11 @@ def profile(request):
             return HttpResponseRedirect(reverse('home'))
     diction = {'title':'User profile','form':'form'}
     return render(request,'login_app/user.html',context=diction)
+
+@login_required
+def user(request,username):
+    user_other = User.objects.get(username=username)
+    if user_other == request.user:
+        return HttpResponseRedirect(reverse('login_app:profile'))
+    diction = {'user_other':user_other}
+    return render(request,'login_app/userother.html',context=diction)
