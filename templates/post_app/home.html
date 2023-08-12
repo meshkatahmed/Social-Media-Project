@@ -34,6 +34,15 @@
               <a href="{% url 'login_app:user' username=post.author %}">{{post.author}}</a>
             </div>
             <img src="/media/{{post.image}}" width="100%">
+            <div style="padding:20px">
+              {{post.caption}}
+              <br>
+              {% if post.pk in liked_post_list %}
+                <a href="{% url 'post_app:unlike' pk=pk %}"><i class="fa fa-heart" style="font-size:36px"</i></a>
+              {% else %}
+                <a href="{% url 'post_app:like' pk=pk %}"><i class="fa fa-heart-o" style="font-size:36px"</i></a>
+              {% endif %}
+            </div>
           </div>
           <br>
           <br>
